@@ -1,0 +1,16 @@
+#ifndef OWNERSWIDGET_H
+#define OWNERSWIDGET_H
+#include<QWidget>
+QT_BEGIN_NAMESPACE
+class QPushButton;
+class QLabel;
+QT_END_NAMESPACE
+
+class OwnerWidget:public QWidget
+{
+    Q_OBJECT
+public:
+    
+};
+
+#endif // OWNERSWIDGET_H
