@@ -16,22 +16,18 @@ AboutCarsWidget::AboutCarsWidget(QWidget *parent/*=0*/):
     setLayout(layout);
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
 }
-void AboutCarsWidget::aboutCars()
-{
+void AboutCarsWidget::aboutCars(){
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("garage.sqlite");
     if (!db.open()){
         qDebug()<<db.lastError();
         return;
-    }
-    else
-    {
+    }else{
         QSqlQuery query("SELECT cars.id, cars.VIN, cars.model, cars.k, cars.country, Clients.name "
                         "FROM cars INNER JOIN Clients "
                         "ON cars.id_owner=Clients.idClients;");
         bool b=query.exec();
-        if(!b)
-        {
+        if(!b){
             qDebug()<<query.lastError();
             return;
         }else{

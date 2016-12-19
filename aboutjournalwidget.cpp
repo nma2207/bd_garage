@@ -22,8 +22,7 @@ AboutJournalWidget::AboutJournalWidget(QWidget *parent/*=0*/):
     setLayout(layout);
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
 }
-void AboutJournalWidget::aboutJournal()
-{
+void AboutJournalWidget::aboutJournal(){
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("garage.sqlite");
     if (!db.open()){
@@ -41,13 +40,10 @@ void AboutJournalWidget::aboutJournal()
                         "ON cars.id_owner=clients.idClients "
                         "ORDER by journal.id;");
         bool b=query.exec();
-        if(!b)
-        {
+        if(!b){
             qDebug()<<query.lastError();
             return;
-        }
-        else
-        {
+        }else{
             QSqlQueryModel *model=new QSqlQueryModel;
             model->setQuery(query);
             aboutJournalTable->setModel(model);
@@ -55,17 +51,14 @@ void AboutJournalWidget::aboutJournal()
         aboutJournalTable->show();
     }
     db.removeDatabase(db.databaseName());
-
 }
-void AboutJournalWidget::morePrice()
-{
+void AboutJournalWidget::morePrice(){
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("garage.sqlite");
     if (!db.open()){
         qDebug()<<db.lastError();
         return;
-    }
-    else{
+    }else{
         QSqlQuery query;
         query.prepare(QString("SELECT cars.model 'Модель', services.name 'Ремонт', cars.k*services.price 'Цена' "
                         "FROM cars INNER JOIN journal "
@@ -74,13 +67,10 @@ void AboutJournalWidget::morePrice()
                         "ON services.id=journal.services_id "
                         "WHERE cars.k*services.price >%1;").arg(morePriceLine->text()));
         bool b=query.exec();
-        if(!b)
-        {
+        if(!b){
             qDebug()<<query.lastError();
             return;
-        }
-        else
-        {
+        }else{
             QSqlQueryModel *model=new QSqlQueryModel;
             model->setQuery(query);
             aboutJournalTable->setModel(model);
@@ -89,8 +79,7 @@ void AboutJournalWidget::morePrice()
     }
   db.removeDatabase(db.databaseName());
 }
-void AboutJournalWidget::showNotFreshRem()
-{
+void AboutJournalWidget::showNotFreshRem(){
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("garage.sqlite");
     if (!db.open()){
@@ -103,23 +92,14 @@ void AboutJournalWidget::showNotFreshRem()
                     "ON services.id=journal.services_id "
                     "WHERE end_data > plan_data;");
     bool b=query.exec();
-    if(!b)
-    {
+    if(!b){
         qDebug()<<query.lastError();
         return;
-    }
-    else
-    {
-
-
+    }else{
         QSqlQueryModel *model=new QSqlQueryModel;
         model->setQuery(query);
         aboutJournalTable->setModel(model);
-
-
+        aboutJournalTable->show();
     }
-
-    aboutJournalTable->show();
     db.removeDatabase(db.databaseName());
-
 }

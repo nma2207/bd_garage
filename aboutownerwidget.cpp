@@ -14,16 +14,13 @@ AboutOwnerWidget::AboutOwnerWidget(QWidget *parent/*=0*/):
     setLayout(layout);
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
 }
-void AboutOwnerWidget::aboutOwners()
-{
+void AboutOwnerWidget::aboutOwners(){
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("garage.sqlite");
     if (!db.open()){
         qDebug()<<db.lastError();
         return;
-    }
-    else
-    {
+    }else{
         QSqlTableModel *model=new QSqlTableModel (0,db);
         model->setTable("Clients");
         model->select();

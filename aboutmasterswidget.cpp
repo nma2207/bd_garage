@@ -19,34 +19,28 @@ AboutMastersWidget::AboutMastersWidget(QWidget *parent/*=0*/):
     setLayout(layout);
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
 }
-void AboutMastersWidget::aboutMasters()
-{
+void AboutMastersWidget::aboutMasters(){
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("garage.sqlite");
     if (!db.open()){
         qDebug()<<db.lastError();
         return;
-    }
-    else
-    {
+    }else{
         QSqlTableModel *model=new QSqlTableModel (0,db);
-        model->setTable("Masters");  // Имя таблицы базы данных.
+        model->setTable("Masters");
         model->select();
         aboutMastersTable->setModel(model);
         aboutMastersTable->show();
     }
     db.removeDatabase(db.databaseName());
-
 }
-void AboutMastersWidget::inComeEachMaster()
-{
+void AboutMastersWidget::inComeEachMaster(){
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("garage.sqlite");
     if (!db.open()){
         qDebug()<<db.lastError();
         return;
-    }
-    else{
+    }else{
         QSqlTableModel *model=new QSqlTableModel (0,db);
         model->setTable("sum_work");//запрашиваем представление
         model->select();
